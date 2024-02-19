@@ -6,7 +6,7 @@ import "fmt"
 // initialization and startup
 // of our go application 
 func Run() error {
-	fmt.Println("Starting our application ...")
+	fmt.Println("Starting our application...")
 	return nil
 }
 func main() {
