@@ -7,13 +7,19 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - Postgress_DB=postgres
-      - Postgres_USER=postgres
-      - Postgres_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     networks:
       - fullstack
     volumes:
       - database_postgres:/var/lib/postgres/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    command: postgres -c listen_addresses='*' 
 
   api:
     build: .
@@ -29,9 +35,11 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - fullstack
+    command: "./app"
 
 volumes:
   database_postgres:
