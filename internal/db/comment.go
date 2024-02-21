@@ -38,7 +38,7 @@ func (d *Database) GetComment(
 	)
 	err := row.Scan(&cmtRow.ID, &cmtRow.Slug, &cmtRow.Body, &cmtRow.Author)
 	if err != nil {
-		return comment.Comment{}, fmt.Errorf("Error fetching the comment by uuid: %w", err)
+		return comment.Comment{}, fmt.Errorf("error fetching the comment by uuid: %w", err)
 	}
 	return convertCommentRowToComment(cmtRow), nil
 }
